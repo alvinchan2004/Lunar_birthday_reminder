@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import List
 import uuid
 from src.utilities.logger import Loggable
+import logging
 
 
 class LunarBirthdayReminder(Loggable):
@@ -43,7 +44,7 @@ class LunarBirthdayReminder(Loggable):
             gregorian_date = solar.to_date()
             return datetime(gregorian_date.year, gregorian_date.month, gregorian_date.day)
         except (ImportError, Exception) as e:
-            self.logger.warning(f"lunarcalendar conversion failed: {e}. Using fallback conversion.")
+            self.output_and_log(f"lunarcalendar conversion failed: {e}. Using fallback conversion.", level=logging.WARNING)
             return self._fallback_lunar_to_gregorian(lunar_year, lunar_month, lunar_day)
     
     def _fallback_lunar_to_gregorian(self, lunar_year: int, lunar_month: int, lunar_day: int) -> datetime:
@@ -213,7 +214,7 @@ class LunarBirthdayReminder(Loggable):
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(ics_content)
         
-        self.logger.info(f"ICS file created: {output_path}")
+        self.output_and_log(f"ICS file created: {output_path}", level=logging.INFO)    
         return output_path
 
 
