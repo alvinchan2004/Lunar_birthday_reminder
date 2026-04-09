@@ -46,14 +46,20 @@ class BirthdayGeneratorForm(forms.Form):
     
     repeat_years = forms.IntegerField(
         min_value=1,
-        max_value=50,
+        max_value=100,
         required=True,
         widget=forms.NumberInput(attrs={
             'class': 'form-control',
             'placeholder': 'Number of years to repeat'
         }),
         label='Repeat Years',
-        help_text='Number of years to generate reminders for'
+        help_text='Number of years to generate reminders for (max 100 years)',
+        error_messages={
+            'max_value': 'Repeat years cannot exceed 100. Please enter a value between 1 and 100.',
+            'min_value': 'Repeat years must be at least 1.',
+            'required': 'This field is required.',
+            'invalid': 'Please enter a valid number.'
+        }
     )
     
     start_year = forms.IntegerField(

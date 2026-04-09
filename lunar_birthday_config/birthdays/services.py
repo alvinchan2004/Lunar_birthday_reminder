@@ -20,6 +20,27 @@ class LunarBirthdayReminder(Loggable):
         """Initialize the lunar birthday reminder."""
         super().__init__(module_name="LunarBirthdayReminder", output_function=None)
     
+    def _get_translations(self, language: str = 'en'):
+        """Get translations for ICS content.
+        
+        Args:
+            language: Language code ('en' or 'zh')
+            
+        Returns:
+            Dictionary with translation keys
+        """
+        translations = {
+            'en': {
+                'birthday': "'s lunar birthday",
+                'lunar': "Lunar: {}/{}/{}"
+            },
+            'zh': {
+                'birthday': '的农历生日',
+                'lunar': "农历: {}/{}/{}"
+            }
+        }
+        return translations.get(language, translations['en'])
+    
     def lunar_to_gregorian(self, lunar_year: int, lunar_month: int, lunar_day: int) -> datetime:
         """
         Convert lunar calendar date to Gregorian calendar date.
@@ -74,7 +95,8 @@ class LunarBirthdayReminder(Loggable):
         lunar_month: int,
         lunar_day: int,
         repeat_years: int,
-        start_year: int = None
+        start_year: int = None,
+        language: str = 'en'
     ) -> str:
         """
         Generate ICS file content for lunar birthday reminders.
@@ -85,6 +107,7 @@ class LunarBirthdayReminder(Loggable):
             lunar_day: Birth day in lunar calendar (1-30)
             repeat_years: Number of years to generate reminders for
             start_year: Start year (default: current year)
+            language: Language code ('en' or 'zh')
         
         Returns:
             ICS file content as string
@@ -114,7 +137,8 @@ class LunarBirthdayReminder(Loggable):
             event = self._create_vevent(
                 name=name,
                 date=gregorian_date,
-                lunar_date=(current_year, lunar_month, lunar_day)
+                lunar_date=(current_year, lunar_month, lunar_day),
+                language=language
             )
             ics_content.append(event)
         
@@ -127,7 +151,8 @@ class LunarBirthdayReminder(Loggable):
         self,
         name: str,
         date: datetime,
-        lunar_date: tuple
+        lunar_date: tuple,
+        language: str = 'en'
     ) -> str:
         """
         Create a VEVENT block for ICS file.
@@ -136,6 +161,7 @@ class LunarBirthdayReminder(Loggable):
             name: Person's name
             date: Gregorian date
             lunar_date: Tuple of (year, month, day) in lunar calendar
+            language: Language code ('en' or 'zh')
         
         Returns:
             VEVENT block as string
@@ -147,10 +173,13 @@ class LunarBirthdayReminder(Loggable):
         date_str = date.strftime("%Y%m%d")
         now_str = datetime.now().strftime("%Y%m%dT%H%M%SZ")
         
+        # Get translations
+        trans = self._get_translations(language)
+        
         # Title with lunar date reference
         lunar_year, lunar_month, lunar_day = lunar_date
-        title = f"{name}'s birthday"
-        description = f"Lunar: {lunar_month}/{lunar_day}"
+        title = f"{name}{trans['birthday']}"
+        description = trans['lunar'].format(lunar_year, lunar_month, lunar_day)
         
         event_lines = [
             "BEGIN:VEVENT",
@@ -174,7 +203,8 @@ class LunarBirthdayReminder(Loggable):
         lunar_day: int,
         repeat_years: int,
         output_path: str = None,
-        start_year: int = None
+        start_year: int = None,
+        language: str = 'en'
     ) -> Path:
         """
         Generate and save ICS file for lunar birthday reminder.
@@ -186,6 +216,7 @@ class LunarBirthdayReminder(Loggable):
             repeat_years: Number of years to generate
             output_path: Output file path (default: ./output/{name}_birthday.ics)
             start_year: Start year (default: current year)
+            language: Language code ('en' or 'zh')
         
         Returns:
             Path object of created file
@@ -196,7 +227,8 @@ class LunarBirthdayReminder(Loggable):
             lunar_month=lunar_month,
             lunar_day=lunar_day,
             repeat_years=repeat_years,
-            start_year=start_year
+            start_year=start_year,
+            language=language
         )
         
         # Determine output path
