@@ -10,7 +10,7 @@ import pytest
 import tempfile
 from datetime import datetime
 from pathlib import Path
-from src.main import LunarBirthdayReminder
+from lunar_birthday_config.birthdays.services import LunarBirthdayReminder
 
 
 @pytest.fixture
@@ -124,8 +124,8 @@ def test_create_vevent_format(reminder):
     assert "UID:" in vevent
     assert "DTSTAMP:" in vevent
     assert "DTSTART;VALUE=DATE:" in vevent
-    assert "SUMMARY:John Doe's birthday" in vevent
-    assert "DESCRIPTION:Lunar: 1/1" in vevent
+    assert "SUMMARY:John Doe's lunar birthday" in vevent
+    assert "DESCRIPTION:Lunar: 2026/1/1" in vevent
 
 
 def test_create_vevent_date_format(reminder):
@@ -176,7 +176,7 @@ def test_save_ics_file_content(reminder, temp_dir):
     
     assert "BEGIN:VCALENDAR" in content
     assert "END:VCALENDAR" in content
-    assert "Max Musterman's birthday" in content
+    assert "Max Musterman's lunar birthday" in content
     assert content.count("BEGIN:VEVENT") == 2
 
 
@@ -234,7 +234,7 @@ def test_save_ics_file_special_characters_in_name(reminder, temp_dir):
     assert output_path.exists()
     with open(output_path, "r", encoding="utf-8") as f:
         content = f.read()
-    assert "Jean-Pierre Dupont's birthday" in content
+    assert "Jean-Pierre Dupont's lunar birthday" in content
 
 
 def test_generate_multiple_years(reminder):
@@ -250,7 +250,7 @@ def test_generate_multiple_years(reminder):
     
     # Verify multiple events
     assert ics_content.count("BEGIN:VEVENT") == repeat_years
-    assert "SUMMARY:Test Person's birthday" in ics_content
+    assert "SUMMARY:Test Person's lunar birthday" in ics_content
 
 
 # Integration tests
@@ -276,6 +276,6 @@ def test_end_to_end_workflow(reminder, temp_dir):
     # Check structure
     assert any("BEGIN:VCALENDAR" in line for line in lines)
     assert any("END:VCALENDAR" in line for line in lines)
-    assert any("Maria Garcia's birthday" in line for line in lines)
-    assert any("Lunar: 6/8" in line for line in lines)
+    assert any("Maria Garcia's lunar birthday" in line for line in lines)
+    assert any("Lunar: 2028/6/8" in line for line in lines)
 
