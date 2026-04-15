@@ -9,14 +9,26 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
 # Install dependencies
-COPY requirements.txt /app/
+COPY --chown=568:568 requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project
-COPY . /app/
+COPY --chown=568:568 . /app/
+
+
+
+# Ensure database directory has write permissions
+RUN chown -R 568:568 /app/lunar_birthday_config
+RUN chmod 755 /app/lunar_birthday_config
+
+USER 568
+
+# Set Python path and working directory to the Django project
+ENV PYTHONPATH=/app
+WORKDIR /app/lunar_birthday_config
 
 # Expose the port Django runs on
-EXPOSE 8000
+EXPOSE 9000
 
 # Run the application (using Gunicorn for production)
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "lunar_birthday_config.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:9000", "lunar_birthday_config.wsgi:application"]

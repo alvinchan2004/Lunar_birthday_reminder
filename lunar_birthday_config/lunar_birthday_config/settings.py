@@ -31,8 +31,16 @@ SECRET_KEY = 'django-insecure-i3wmp!($h5h(!=ax*dh+4obf*cml_ac@&s!c4j8i-m4=ojkavs
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['truenas.local', 'localhost', '127.0.0.1', "calendar.ruifangfeng.com"]
 
+# CSRF trusted origins for cross-origin requests
+CSRF_TRUSTED_ORIGINS = [
+    'https://calendar.ruifangfeng.com',
+    'https://truenas.local:9000',
+    'http://truenas.local:9000',
+    'http://localhost:9000',
+    'https://localhost:9000',
+]
 
 # Application definition
 
