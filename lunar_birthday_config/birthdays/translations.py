@@ -20,6 +20,12 @@ TRANSLATIONS = {
         'generate_btn': 'Generate ICS',
         'lang_en': 'English',
         'lang_zh': '简体中文',
+        'help_description': 'Enter the lunar calendar month and day to generate reminders for your birthdays. Lunar calendar dates follow the traditional Chinese calendar system. You can set how many years to repeat the reminders and specify the starting year for the generation. This tool will generate an ICS file that you can import into any calendar application that supports ICS format, such as Google Calendar, Apple Calendar, etc. For information on how to import ICS files, please search online for relevant tutorials. Usually you just need to select the "Import" function in your calendar application and select the generated ICS file.',
+        'name_help': "The person's name",
+        'lunar_month_help': 'Month in the lunar calendar (1-12)',
+        'lunar_day_help': 'Day in the lunar month (1-30)',
+        'start_year_help': 'The year to begin generating reminders',
+        'help_title': 'Help',
     },
     'zh': {
         'title': '农历生日日历提醒生成器',
@@ -37,6 +43,12 @@ TRANSLATIONS = {
         'generate_btn': '生成日历文件',
         'lang_en': 'English',
         'lang_zh': '简体中文',
+        'help_description': '输入农历月份和日期以为您的生日生成提醒。农历日期遵循传统的中国日历系统。您可以设置重复提醒的年数，并指定生成的开始年份。此工具会生成一个ICS文件，您可以将其导入到任何支持ICS格式的日历应用中，如Google Calendar、Apple Calendar等。关于如何导入ICS文件，请上网搜索相关教程，通常在日历应用中选择“导入”功能并选择生成的ICS文件即可。',
+        'name_help': '人物的名字',
+        'lunar_month_help': '农历月份 (1-12)',
+        'lunar_day_help': '农历日期 (1-30)',
+        'start_year_help': '开始生成提醒的年份',
+        'help_title': '使用说明'
     }
 }
 

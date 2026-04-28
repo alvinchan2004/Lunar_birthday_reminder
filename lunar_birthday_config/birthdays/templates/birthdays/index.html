@@ -53,6 +53,18 @@
     <div class="container py-5" style="margin-top: 30px;">
       <h1 class="mb-4">{{ translations.title }}</h1>
 
+      <div class="alert alert-info" role="alert">
+        <h5 class="alert-heading">{{ translations.help_title|default:'Help' }}</h5>
+        <p>{{ translations.help_description|default:'Enter the lunar calendar month and day to generate reminders for your birthdays. Lunar calendar dates follow the traditional Chinese calendar system. You can set how many years to repeat the reminders and specify the starting year for the generation.' }}</p>
+        <ul class="mb-0">
+          <li><strong>{{ translations.name|default:'Name' }}:</strong> {{ translations.name_help|default:"The person's name" }}</li>
+          <li><strong>{{ translations.lunar_month|default:'Lunar Month' }}:</strong> {{ translations.lunar_month_help|default:'Month in the lunar calendar (1-12)' }}</li>
+          <li><strong>{{ translations.lunar_day|default:'Lunar Day' }}:</strong> {{ translations.lunar_day_help|default:'Day in the lunar month (1-30)' }}</li>
+          <li><strong>{{ translations.repeat_years|default:'Repeat Years' }}:</strong> {{ translations.repeat_years_help|default:'Number of years to generate reminders' }}</li>
+          <li><strong>{{ translations.start_year|default:'Start Year' }}:</strong> {{ translations.start_year_help|default:'The year to begin generating reminders' }}</li>
+        </ul>
+      </div>
+
       <form method="post" novalidate>
         {% csrf_token %}
         <div class="row g-3">

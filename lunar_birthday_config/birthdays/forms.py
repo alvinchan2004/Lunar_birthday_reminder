@@ -63,7 +63,7 @@ class BirthdayGeneratorForm(forms.Form):
     )
     
     start_year = forms.IntegerField(
-        min_value=2024,
+        min_value=0,
         required=True,
         widget=forms.NumberInput(attrs={
             'class': 'form-control',
