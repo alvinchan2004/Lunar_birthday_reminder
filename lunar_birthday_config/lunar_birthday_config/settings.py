@@ -29,7 +29,7 @@ if str(PROJECT_ROOT) not in sys.path:
 SECRET_KEY = 'django-insecure-i3wmp!($h5h(!=ax*dh+4obf*cml_ac@&s!c4j8i-m4=ojkavs'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['truenas.local', 'localhost', '127.0.0.1', "calendar.ruifangfeng.com"]
 

@@ -1,1 +1,6 @@
 V1.0.0
+
+New feature
+
+* First runable Django webapp to generate lunar calender reminder
+* With Docker config for TrueNAS custom app run with user 568
